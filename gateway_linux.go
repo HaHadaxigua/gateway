@@ -1,3 +1,4 @@
+//go:build linux
 // +build linux
 
 package gateway
@@ -28,7 +29,7 @@ func discoverGatewayOSSpecific() (ip net.IP, err error) {
 	return parseLinuxGatewayIP(bytes)
 }
 
-func discoverGatewayInterfaceOSSpecific() (ip net.IP, err error) {
+func discoverGatewayInterfaceOSSpecific() (ip *net.IPNet, err error) {
 	f, err := os.Open(file)
 	if err != nil {
 		return nil, fmt.Errorf("Can't access %s", file)

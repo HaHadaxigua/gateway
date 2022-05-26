@@ -199,7 +199,7 @@ func parseLinuxGatewayIP(output []byte) (net.IP, error) {
 	return net.IP(ipd32), nil
 }
 
-func parseLinuxInterfaceIP(output []byte) (net.IP, error) {
+func parseLinuxInterfaceIP(output []byte) (*net.IPNet, error) {
 	parsedStruct, err := parseToLinuxRouteStruct(output)
 	if err != nil {
 		return nil, err
@@ -216,12 +216,11 @@ func parseLinuxInterfaceIP(output []byte) (net.IP, error) {
 	}
 
 	// split when its 192.168.8.8/24
-	ipString := strings.Split(addrs[0].String(), "/")[0]
-	ip := net.ParseIP(ipString)
-	if ip == nil {
-		return nil, fmt.Errorf("invalid addr %s", ipString)
+	_, ipNet, err := net.ParseCIDR(addrs[0].String())
+	if err != nil {
+		return nil, err
 	}
-	return ip, nil
+	return ipNet, nil
 }
 
 func parseDarwinRouteGet(output []byte) (net.IP, error) {

@@ -18,6 +18,6 @@ func DiscoverGateway() (ip net.IP, err error) {
 }
 
 // DiscoverInterface is the OS independent function to call to get the default network interface IP that uses the default gateway
-func DiscoverInterface() (ip net.IP, err error) {
+func DiscoverInterface() (ip *net.IPNet, err error) {
 	return discoverGatewayInterfaceOSSpecific()
 }
