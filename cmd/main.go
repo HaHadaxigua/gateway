@@ -52,7 +52,7 @@ func newSubnetCommand() *cli.Command {
 			if err != nil {
 				logrus.Errorf("failed to get subnet")
 			}
-			os.Stdout.Write([]byte(discoverGateway.String()))
+			fmt.Println(discoverGateway.String())
 			return nil
 		},
 	}
